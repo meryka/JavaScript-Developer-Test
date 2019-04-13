@@ -1,0 +1,18 @@
+{
+  "name": "javascripttest",
+  "version": "1.0.0",
+  "description": "Proposed solution for the Javascript Developer Test",
+  "scripts": {
+    "start": "nodemon --exec babel-node level1.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Meryem Kassab",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "jest": "^24.7.1"
+  }
+}

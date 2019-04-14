@@ -1,4 +1,4 @@
-import Collection from "./level2";
+import Collection from "../level2";
 import fs from "fs";
 
 test("Testing a single line", () => {
@@ -70,9 +70,9 @@ test("Testing a line ending with \\n", () => {
 });
 
 test("Testing with an input file", () => {
-  const inputFile = "./level2-input.txt";
+  const inputFile = "./tests/test-files/level2-input.txt";
   const inputData = fs.readFileSync(inputFile).toString();
-  const outputFile = "./level2-output.txt";
+  const outputFile = "./tests/test-files/level2-output.txt";
   const output = fs.readFileSync(outputFile).toString();
   const outputData = JSON.parse(output);
   expect(new Collection(inputData)).toEqual(outputData);

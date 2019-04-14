@@ -1,5 +1,5 @@
-import Collection from "./level1";
-import fs from "fs";
+import Collection from "../level2";
+import { readFileSync } from "fs";
 
 test("Testing a single line", () => {
   const singleLine = "100000  ATIVO             1000  300   500   1200";
@@ -112,10 +112,10 @@ test("Testing with a description containing spaces", () => {
 });
 
 test("Testing with an input file", () => {
-  const inputFile = "./level1-input.txt";
-  const inputData = fs.readFileSync(inputFile).toString();
-  const outputFile = "./output.txt";
-  const output = fs.readFileSync(outputFile).toString();
+  const inputFile = "./tests/test-files/level1-input.txt";
+  const inputData = readFileSync(inputFile).toString();
+  const outputFile = "./tests/test-files/level1-output.txt";
+  const output = readFileSync(outputFile).toString();
   const outputData = JSON.parse(output);
   expect(new Collection(inputData)).toEqual(outputData);
 });

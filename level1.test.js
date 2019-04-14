@@ -1,4 +1,5 @@
 import Collection from "./level1";
+import fs from "fs";
 
 test("Testing a single line", () => {
   const singleLine = "100000  ATIVO             1000  300   500   1200";
@@ -9,7 +10,8 @@ test("Testing a single line", () => {
       openingBalance: 1000,
       debit: 300,
       credit: 500,
-      finalBalance: 1200
+      finalBalance: 1200,
+      parent: null
     }
   ];
   expect(new Collection(singleLine)).toMatchObject(expected);
@@ -25,7 +27,8 @@ test("Testing multiple lines", () => {
       openingBalance: 1000,
       debit: 300,
       credit: 500,
-      finalBalance: 1200
+      finalBalance: 1200,
+      parent: null
     },
     {
       description: "ATIVO CIRCULANTE",
@@ -33,7 +36,8 @@ test("Testing multiple lines", () => {
       openingBalance: 500,
       debit: 100,
       credit: 200,
-      finalBalance: 600
+      finalBalance: 600,
+      parent: "100000"
     },
     {
       description: "DISPONIVEL",
@@ -41,7 +45,8 @@ test("Testing multiple lines", () => {
       openingBalance: 200,
       debit: 100,
       credit: 50,
-      finalBalance: 150
+      finalBalance: 150,
+      parent: "110000"
     },
     {
       description: "PASSIVO",
@@ -49,7 +54,8 @@ test("Testing multiple lines", () => {
       openingBalance: 800,
       debit: 250,
       credit: 450,
-      finalBalance: 1000
+      finalBalance: 1000,
+      parent: null
     }
   ];
   expect(new Collection(lines)).toEqual(expected);
@@ -64,7 +70,8 @@ test("Testing a line ending with \\n", () => {
       openingBalance: 1000,
       debit: 300,
       credit: 500,
-      finalBalance: 1200
+      finalBalance: 1200,
+      parent: null
     }
   ];
   expect(new Collection(singleLine)).toMatchObject(expected);
@@ -80,7 +87,8 @@ test("Testing with a string openingBalance instead of a number", () => {
       openingBalance: NaN,
       debit: 300,
       credit: 500,
-      finalBalance: 1200
+      finalBalance: 1200,
+      parent: null
     }
   ];
   expect(new Collection(singleLine)).toMatchObject(expected);
@@ -96,8 +104,18 @@ test("Testing with a description containing spaces", () => {
       openingBalance: 500,
       debit: 300,
       credit: 500,
-      finalBalance: 1200
+      finalBalance: 1200,
+      parent: null
     }
   ];
   expect(new Collection(singleLine)).toMatchObject(expected);
+});
+
+test("Testing with an input file", () => {
+  const inputFile = "./level1-input.txt";
+  const inputData = fs.readFileSync(inputFile).toString();
+  const outputFile = "./output.txt";
+  const output = fs.readFileSync(outputFile).toString();
+  const outputData = JSON.parse(output);
+  expect(new Collection(inputData)).toEqual(outputData);
 });

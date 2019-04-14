@@ -35,7 +35,7 @@ export default class Collection {
     let lines = string.split("\n");
     // Filters the array lines to remove any empty line
     var filteredLines = lines.filter(function(el) {
-      return el;
+      return /\S/.test(el);
     });
     // For each element of the array lines, call the function lineToObject
     // Stores its value as an element of resultArray
@@ -57,16 +57,41 @@ export default class Collection {
     // Splits the line with a delimiter of two spaces or more
     // Stores each property as an element of the array properties
     let properties = line.split(/\s{2,}/);
+    let str;
     // Creates an object from the array properties and returns it
     // Makes sure that the data types are correct
-    let str;
     let result = {
       description: properties[1],
-      classifier: properties[0],
-      openingBalance: Number(properties[2]),
-      debit: Number(properties[3]),
-      credit: Number(properties[4]),
-      finalBalance: Number(properties[5])
+      //Remove all the dots and white spaces from the classifier and add zeros at the end
+      classifier:
+        (str = properties[0].replace(/\./g, "").replace(/\s/, "")) +
+        "0".repeat(6 - str.length),
+      //For the following properties, the dots are removed, the comma is replaced by a
+      //dot, and the last letter (currency) is removed from the end if exists
+      openingBalance: Number(
+        properties[2]
+          .replace(/\./g, "")
+          .replace(",", ".")
+          .replace(/\D$/, "")
+      ),
+      debit: Number(
+        properties[3]
+          .replace(/\./g, "")
+          .replace(",", ".")
+          .replace(/\D$/, "")
+      ),
+      credit: Number(
+        properties[4]
+          .replace(/\./g, "")
+          .replace(",", ".")
+          .replace(/\D$/, "")
+      ),
+      finalBalance: Number(
+        properties[5]
+          .replace(/\./g, "")
+          .replace(",", ".")
+          .replace(/\D$/, "")
+      )
     };
     //If the classifier is a multiple of 100000, then it has no parent
     //Else, remove all zeros at the end along with the last non zero number,

@@ -1,4 +1,4 @@
-import Collection from "../level2";
+import Collection from "../src/level3";
 import { readFileSync } from "fs";
 
 test("Testing a single line", () => {

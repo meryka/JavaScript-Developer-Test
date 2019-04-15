@@ -33,7 +33,7 @@ export default class Collection {
     // Splits the received string with delimiter '\n'
     // Stores each line as an element of the array lines
     let lines = string.split("\n");
-    // Filters the array lines to remove any empty line
+    // Filters the array line containing spaces only
     var filteredLines = lines.filter(function(el) {
       return /\S/.test(el);
     });
@@ -94,12 +94,15 @@ export default class Collection {
       )
     };
     //If the classifier is a multiple of 100000, then it has no parent
-    //Else, remove all zeros at the end along with the last non zero number,
+    //Else, remove two zeros or more zeros from the end
+    //if the length of the result is 3 or less, remove the last digit
+    //else, if the length is more than 3, remove the last two digits
     //then fill the parents with zeros
     result.parent =
       Number(result.classifier) % 100000
-        ? (str = result.classifier.replace(/0+$/, "").slice(0, -1)) +
-          "0".repeat(6 - str.length)
+        ? ((str = str.replace(/0{2,}$/, "")).length > 3
+            ? (str = str.slice(0, -2).replace(/0+$/, ""))
+            : (str = str.slice(0, -1))) + "0".repeat(6 - str.length)
         : null;
     return result;
   }

@@ -309,7 +309,7 @@
           "debit": 1300,
           "credit": 0,
           "finalBalance": 3640,
-          "parent": "311100"
+          "parent": "311000"
     },
     {    "description": "Despesas Administrativas e de Estrutur",
           "classifier": "312000",

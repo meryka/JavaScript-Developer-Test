@@ -28,6 +28,7 @@ export default class Collection {
    * @returns {array} the desired array
    */
   stringToCollection(string) {
+    let maxLength = 0;
     // Array representing the desired output
     let resultArray = [];
     // Splits the received string with delimiter '\n'
@@ -45,10 +46,14 @@ export default class Collection {
     // Stores its value as an element of resultArray
     for (var i = 0; i < filteredLines.length; i++) {
       resultArray[i] = this.lineToObject(filteredLines[i].trim());
+      maxLength =
+        resultArray[i].classifier.length > maxLength
+          ? resultArray[i].classifier.length
+          : maxLength;
     }
     // Returns the desired array
     // each element of resultArray is an object constructed of one received line
-    return resultArray;
+    return this.formatClassifier(resultArray, maxLength);
   }
   /**
    * Receives a line and returns the desired object
@@ -127,15 +132,22 @@ export default class Collection {
     //then fill the parents with zeros
     result.parent =
       Number(result.classifier) % 10 ** (result.classifier.length - 1)
-        ? ((str = str.replace(/0{2,}$/, "")).length > 3
-            ? (str = str.slice(0, -2).replace(/0+$/, ""))
-            : (str = str.slice(0, -1))) +
-          (str.length > 6
-            ? str.length > 9
-              ? "0".repeat(10 - str.length)
-              : "0".repeat(9 - str.length)
-            : "0".repeat(6 - str.length))
+        ? (str = str.replace(/0{2,}$/, "")).length > 3
+          ? str.slice(0, -2)
+          : str.slice(0, -1)
         : null;
     return result;
+  }
+
+  formatClassifier(collection, maxLength) {
+    collection.forEach(function(object) {
+      let classifierLength = object.classifier.length;
+      object.classifier += "0".repeat(maxLength - classifierLength);
+      if (object.parent) {
+        let parentLength = object.parent.length;
+        object.parent += "0".repeat(maxLength - parentLength);
+      }
+    });
+    return collection;
   }
 }

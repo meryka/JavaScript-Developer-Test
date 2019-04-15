@@ -4,7 +4,6 @@
  * ES6 class
  * Contains property @array representing the desired collection
  */
-
 export default class Collection {
   /**
    * Constructor

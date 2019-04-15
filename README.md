@@ -1,4 +1,5 @@
 # JavaScript-Developer-Test
+
 JavaScript Hiring Test - Nucont
 
 Proposed solution for the JavaScript Developer Test with the coresponding test cases.

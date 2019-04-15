@@ -1,4 +1,4 @@
-import Collection from "../src/level3";
+import Collection from "../src/level4";
 import fs from "fs";
 
 test("Testing a single line", () => {

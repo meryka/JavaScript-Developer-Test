@@ -15,5 +15,8 @@
     "@babel/preset-env": "^7.4.3",
     "babel-plugin-static-fs": "^1.2.0",
     "jest": "^24.7.1"
+  },
+  "dependencies": {
+    "eslint-plugin-react": "^7.12.4"
   }
 }

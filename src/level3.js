@@ -1,6 +1,6 @@
 /**
  * author @mery
- * Proposed solution for level 1
+ * Proposed solution for level 3
  * ES6 class
  * Contains property @array representing the desired collection
  */
@@ -28,6 +28,7 @@ export default class Collection {
    * @returns {array} the desired array
    */
   stringToCollection(string) {
+    //Max length of classifier, used to format all classifiers to be the same length
     let maxLength = 0;
     // Array representing the desired output
     let resultArray = [];
@@ -44,14 +45,15 @@ export default class Collection {
     // For each element of the array lines, trim it (remove white spaces in the beg and end),
     // then call the function lineToObject
     // Stores its value as an element of resultArray
-    for (var i = 0; i < filteredLines.length; i++) {
+    // Update the maximum classifier length
+    for (let i = 0; i < filteredLines.length; i++) {
       resultArray[i] = this.lineToObject(filteredLines[i].trim());
       maxLength =
         resultArray[i].classifier.length > maxLength
           ? resultArray[i].classifier.length
           : maxLength;
     }
-    // Returns the desired array
+    // Returns the desired array aftr formatting it (classifiers same length)
     // each element of resultArray is an object constructed of one received line
     return this.formatClassifier(resultArray, maxLength);
   }
@@ -66,12 +68,18 @@ export default class Collection {
     // Splits the line with a delimiter of two spaces or more
     // Stores each property as an element of the array properties
 
+    //Modified this to split over (two spaces or more) or (any white space other than a space)
+    //The previous one did not work for a single tab or a single carriage return
+    //That's why two or more spaces are replaced with a tab, then the line is split over
+    //whitespaces other than a space
+    //All this is to conserve composite descriptions containing a single space in between
     let properties = line.replace(/[" "]{2,}/g, "\t").split(/[\f\n\r\t\v]/g);
     //Filter the array properties to remove any monetary data (a single non digit character)
     let filteredProperties = properties.filter(function(el) {
       return el && !/^\D{1}$/.test(el);
     });
-    let len, str;
+    //temporary string
+    let str;
     // Creates an object from the array properties and returns it
     // Makes sure that the data types are correct
     let result = {
@@ -117,11 +125,10 @@ export default class Collection {
       )
     };
 
-    //If the classifier is a multiple of 100000, then it has no parent
+    //If the classifier is a multiple of 10 * its length, then it has no parent
     //Else, remove two zeros or more zeros from the end
     //if the length of the result is 3 or less, remove the last digit
     //else, if the length is more than 3, remove the last two digits
-    //then fill the parents with zeros
     result.parent =
       Number(result.classifier) % 10 ** (result.classifier.length - 1)
         ? (str = str.replace(/0{2,}$/, "")).length > 3
@@ -130,13 +137,21 @@ export default class Collection {
         : null;
     return result;
   }
-
+  /**
+   * Formats the classifiers to have the same length
+   * @param {array} collection the collection
+   * @param {number} maxLength the maximum length of the classifiers
+   * @returns {object} the formatted object
+   */
   formatClassifier(collection, maxLength) {
+    //Iterate over each element of the array
     collection.forEach(function(object) {
       let classifierLength = object.classifier.length;
+      //Fill the classifier with zeros at the end
       object.classifier += "0".repeat(maxLength - classifierLength);
       if (object.parent) {
         let parentLength = object.parent.length;
+        //Fill the parent with zeros at the end if not null
         object.parent += "0".repeat(maxLength - parentLength);
       }
     });

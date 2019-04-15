@@ -1,6 +1,6 @@
 /**
  * author @mery
- * Proposed solution for level 1
+ * Proposed solution for level 2
  * ES6 class
  * Contains property @array representing the desired collection
  */
@@ -34,12 +34,12 @@ export default class Collection {
     // Stores each line as an element of the array lines
     let lines = string.split("\n");
     // Filters the array line containing spaces only
-    var filteredLines = lines.filter(function(el) {
+    let filteredLines = lines.filter(function(el) {
       return /\S/.test(el);
     });
     // For each element of the array lines, call the function lineToObject
     // Stores its value as an element of resultArray
-    for (var i = 0; i < filteredLines.length; i++) {
+    for (let i = 0; i < filteredLines.length; i++) {
       resultArray[i] = this.lineToObject(filteredLines[i]);
     }
     // Returns the desired array

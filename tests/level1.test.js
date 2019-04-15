@@ -17,6 +17,18 @@ test("Testing a single line", () => {
   expect(new Collection(singleLine)).toMatchObject(expected);
 });
 
+test("Testing an empty line", () => {
+  const singleLine = "";
+  const expected = [];
+  expect(new Collection(singleLine)).toMatchObject(expected);
+});
+
+test("Testing a line containing \\n only", () => {
+  const singleLine = "\n";
+  const expected = [];
+  expect(new Collection(singleLine)).toMatchObject(expected);
+});
+
 test("Testing multiple lines", () => {
   const lines =
     "100000  ATIVO             1000  300   500   1200\n110000  ATIVO CIRCULANTE  500   100   200   600\n111000  DISPONIVEL        200   100   50    150\n200000  PASSIVO           800   250   450   1000";

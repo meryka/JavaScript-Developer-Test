@@ -34,12 +34,12 @@ export default class Collection {
     // Stores each line as an element of the array lines
     let lines = string.split("\n");
     // Filters the array lines to remove any empty line
-    var filteredLines = lines.filter(function(el) {
+    let filteredLines = lines.filter(function(el) {
       return el;
     });
     // For each element of the array lines, call the function lineToObject
     // Stores its value as an element of resultArray
-    for (var i = 0; i < filteredLines.length; i++) {
+    for (let i = 0; i < filteredLines.length; i++) {
       resultArray[i] = this.lineToObject(filteredLines[i]);
     }
     // Returns the desired array

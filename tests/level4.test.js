@@ -12,7 +12,8 @@ test("Testing a single line", () => {
       debit: 13988798.89,
       credit: 14478791.43,
       finalBalance: 5379367.09,
-      parent: null
+      parent: null,
+      access: "10000"
     }
   ];
   expect(new Collection(singleLine)).toMatchObject(expected);
@@ -29,7 +30,8 @@ test("Testing multiple lines", () => {
       debit: 967949.4,
       credit: 835447.46,
       finalBalance: 5736857.69,
-      parent: null
+      parent: null,
+      access: "20000"
     },
     {
       description: "CIRCULANTE",
@@ -38,7 +40,8 @@ test("Testing multiple lines", () => {
       debit: 942948.91,
       credit: 835447.46,
       finalBalance: 745388.91,
-      parent: "2000000000"
+      parent: "2000000000",
+      access: "20001"
     },
     {
       description: "FORNECEDORES",
@@ -47,7 +50,8 @@ test("Testing multiple lines", () => {
       debit: 470136.21,
       credit: 450880.32,
       finalBalance: 174749.22,
-      parent: "2100000000"
+      parent: "2100000000",
+      access: "20002"
     },
     {
       description: "FORNECEDORES DIVERSOS",
@@ -56,7 +60,8 @@ test("Testing multiple lines", () => {
       debit: 470136.21,
       credit: 450880.32,
       finalBalance: 174749.22,
-      parent: "2101000000"
+      parent: "2101000000",
+      access: "20004"
     }
   ];
   expect(new Collection(lines)).toEqual(expected);
@@ -73,10 +78,17 @@ test("Testing a line ending with \\n", () => {
       debit: 1756.39,
       credit: 0.0,
       finalBalance: 3779.67,
-      parent: "1108010000"
+      parent: "1108010000",
+      access: "11503"
     }
   ];
   expect(new Collection(singleLine)).toMatchObject(expected);
+});
+
+test("Testing without an access property", () => {
+  const singleLine =
+    "1108010800          I.R.R.F.                                         2.023,28        1.756,39           0,00       3.779,67\n";
+  expect(new Collection(singleLine)).not.toHaveProperty("access");
 });
 
 test("Testing with an input file", () => {
